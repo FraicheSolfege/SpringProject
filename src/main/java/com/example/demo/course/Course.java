@@ -1,32 +1,41 @@
-package com.example.demo.student;
+package com.example.demo.course;
 
+import com.example.demo.student.Student;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.*;
+import java.util.HashSet;
 
 @Entity
 @Table
-public class Grade {
+public class Course {
     @Id
     @SequenceGenerator(
-            name = "grade_sequence",
-            sequenceName = "grade_sequence",
+            name = "course_sequence",
+            sequenceName = "course_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "grade_sequence"
+            generator = "course_sequence"
     )
     private Long id;
     private String name;
-    private Integer score;
 
-    public Grade() {
+    @JsonIgnore
+    @ManyToMany(mappedBy = "courses")
+    private Set<Student> students = new HashSet<>();
+
+
+
+    public Course() {
     }
 
-    public Grade(Long id, String name, Integer score) {
+    public Course(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.score = score;
     }
+
 
     public Long getId() {
         return id;
@@ -44,20 +53,11 @@ public class Grade {
         this.name = name;
     }
 
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
     @Override
     public String toString() {
-        return "Grade{" +
+        return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", score=" + score +
                 '}';
     }
 }

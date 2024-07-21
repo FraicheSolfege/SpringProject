@@ -1,31 +1,32 @@
-package com.example.demo.student;
+package com.example.demo.grade;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table
-public class Course {
+public class Grade {
     @Id
     @SequenceGenerator(
-            name = "course_sequence",
-            sequenceName = "course_sequence",
+            name = "grade_sequence",
+            sequenceName = "grade_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "course_sequence"
+            generator = "grade_sequence"
     )
     private Long id;
     private String name;
+    private Integer score;
 
-    public Course() {
+    public Grade() {
     }
 
-    public Course(Long id, String name) {
+    public Grade(Long id, String name, Integer score) {
         this.id = id;
         this.name = name;
+        this.score = score;
     }
-
 
     public Long getId() {
         return id;
@@ -43,11 +44,20 @@ public class Course {
         this.name = name;
     }
 
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
     @Override
     public String toString() {
-        return "Course{" +
+        return "Grade{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", score=" + score +
                 '}';
     }
 }
