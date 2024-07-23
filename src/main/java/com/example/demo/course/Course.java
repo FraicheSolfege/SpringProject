@@ -26,7 +26,9 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private Set<Student> students = new HashSet<>();
 
-
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     public Course() {
     }

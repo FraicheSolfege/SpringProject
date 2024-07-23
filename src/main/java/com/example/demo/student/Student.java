@@ -1,8 +1,12 @@
 package com.example.demo.student;
 
+import com.example.demo.course.Course;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -23,6 +27,10 @@ public class Student {
     private LocalDate dob;
     @Transient
     private Integer age;
+
+    @OneToMany(mappedBy = "student")
+    @JsonIgnore
+    private Set<Course> courses = new HashSet<>();
 
     public Student() {
     }

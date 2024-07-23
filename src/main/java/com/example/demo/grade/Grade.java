@@ -1,6 +1,10 @@
 package com.example.demo.grade;
 
+import com.example.demo.student.Student;
 import jakarta.persistence.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -19,7 +23,23 @@ public class Grade {
     private String name;
     private Integer score;
 
+    private List<Student> ArrayList;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name =  "student_grade",
+    joinColumns = @JoinColumn(name = "grade_id"),
+    inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Student> students;
+
+
+
     public Grade() {
+    }
+
+    public Grade(String name, Integer score) {
+        this.name = name;
+        this.score = score;
     }
 
     public Grade(Long id, String name, Integer score) {
