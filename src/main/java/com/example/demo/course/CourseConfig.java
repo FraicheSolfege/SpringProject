@@ -1,5 +1,5 @@
-package com.example.demo.course;
-
-public class CourseConfig {
-
-}
+//package com.example.demo.course;
+//
+//public class CourseConfig {
+//
+//}

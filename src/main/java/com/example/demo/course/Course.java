@@ -3,11 +3,11 @@ package com.example.demo.course;
 import com.example.demo.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.util.*;
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "course")
 public class Course {
     @Id
     @SequenceGenerator(
@@ -22,22 +22,27 @@ public class Course {
     private Long id;
     private String name;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
     private Set<Student> students = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
 
     public Course() {
     }
 
-    public Course(Long id, String name) {
-        this.id = id;
+    public Course(String name) {
         this.name = name;
     }
 
+    public Course(String name, Set<Student> students) {
+        this.name = name;
+        this.students = students;
+    }
+
+    public Course(Long id, String name, Set<Student> students) {
+        this.id = id;
+        this.name = name;
+        this.students = students;
+    }
 
     public Long getId() {
         return id;
@@ -55,11 +60,20 @@ public class Course {
         this.name = name;
     }
 
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", students=" + students +
                 '}';
     }
 }

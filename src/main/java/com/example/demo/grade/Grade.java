@@ -3,11 +3,11 @@ package com.example.demo.grade;
 import com.example.demo.student.Student;
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "grade")
 public class Grade {
     @Id
     @SequenceGenerator(
@@ -23,29 +23,28 @@ public class Grade {
     private String name;
     private Integer score;
 
-    private List<Student> ArrayList;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name =  "student_grade",
-    joinColumns = @JoinColumn(name = "grade_id"),
-    inverseJoinColumns = @JoinColumn(name = "student_id")
+            name = "student_grade",
+            joinColumns = @JoinColumn(name = "grade_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private Set<Student> students;
-
-
+    private Set<Student> students = new HashSet<>();
 
     public Grade() {
     }
 
-    public Grade(String name, Integer score) {
+    public Grade(String name, Integer score, Set<Student> students) {
         this.name = name;
         this.score = score;
+        this.students = students;
     }
 
-    public Grade(Long id, String name, Integer score) {
+    public Grade(Long id, String name, Integer score, Set<Student> students) {
         this.id = id;
         this.name = name;
         this.score = score;
+        this.students = students;
     }
 
     public Long getId() {
@@ -72,12 +71,21 @@ public class Grade {
         this.score = score;
     }
 
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
     @Override
     public String toString() {
         return "Grade{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", score=" + score +
+                ", students=" + students +
                 '}';
     }
 }

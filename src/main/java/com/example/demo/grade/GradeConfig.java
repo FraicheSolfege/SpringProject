@@ -1,4 +1,4 @@
-package com.example.demo.grade;
-
-public class GradeConfig {
-}
+//package com.example.demo.grade;
+//
+//public class GradeConfig {
+//}
