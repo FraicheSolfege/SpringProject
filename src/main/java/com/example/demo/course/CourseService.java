@@ -11,9 +11,15 @@ public class CourseService {
     private final CourseRepository courseRepository;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
+    public CourseService(CourseRepository courseCRepository) {
+        this.courseRepository = courseCRepository;
     }
+
+    public Course getById(Long courseId) {
+        return courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalStateException("Course with id " + courseId + " does not exist"));
+    }
+
 
     public List<Course> getAllCourses(){
         return courseRepository.findAll();
@@ -40,4 +46,5 @@ public class CourseService {
             course.setName(name);
         }
     }
+
 }

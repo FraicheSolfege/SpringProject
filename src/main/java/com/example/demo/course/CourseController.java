@@ -16,6 +16,12 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    @GetMapping(path = "getOne/{courseId}")
+    public void findById(@RequestParam Long courseId){
+        courseService.getById(courseId);
+    }
+
+
     @GetMapping
     public List<Course> getAllCourses(){
         return courseService.getAllCourses();
