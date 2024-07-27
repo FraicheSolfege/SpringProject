@@ -17,8 +17,8 @@ public class CourseController {
     }
 
     @GetMapping(path = "getOne/{courseId}")
-    public void findById(@RequestParam Long courseId){
-        courseService.getById(courseId);
+    public void findById(@PathVariable Long courseId){
+        courseService.getSingleCourse(courseId);
     }
 
 

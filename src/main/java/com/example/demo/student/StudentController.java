@@ -22,6 +22,7 @@ public class StudentController {
     @GetMapping
     public List<Student> getStudents() {
         return studentService.getStudents();
+
     }
 
     @PostMapping(path = "register")
@@ -40,6 +41,11 @@ public class StudentController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email) {
         studentService.updateStudent(studentId, name, email);
+    }
+
+    @GetMapping(path = "Solitary/{studentId}")
+    public Student getStudent(@PathVariable("studentId") Long studentId) {
+        return studentService.findSingleStudent(studentId);
     }
 }
 

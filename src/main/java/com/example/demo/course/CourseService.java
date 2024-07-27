@@ -15,10 +15,11 @@ public class CourseService {
         this.courseRepository = courseCRepository;
     }
 
-    public Course getById(Long courseId) {
+    public Course getSingleCourse(Long courseId) {
         return courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalStateException("Course with id " + courseId + " does not exist"));
     }
+
 
 
     public List<Course> getAllCourses(){
