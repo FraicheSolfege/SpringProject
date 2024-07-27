@@ -44,7 +44,7 @@ public class Student {
         this.email = email;
         this.dob = dob;
         this.age = age;
-        this.courses = courses;
+        this.courses = (courses != null) ? courses : new HashSet<>();
     }
 
     public Student(Long id, String name, String email, LocalDate dob, Integer age, Set<Course> courses) {
@@ -53,6 +53,7 @@ public class Student {
         this.email = email;
         this.dob = dob;
         this.age = age;
+        this.courses = (courses != null) ? courses : new HashSet<>();
     }
 
     public Long getId() {
