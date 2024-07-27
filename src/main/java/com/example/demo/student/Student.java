@@ -1,7 +1,10 @@
 package com.example.demo.student;
 
 import com.example.demo.course.Course;
+import com.example.demo.grade.Grade;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -29,37 +32,27 @@ public class Student {
     @Transient
     private Integer age;
 
-    @ManyToMany
-    @JoinTable(
-            name = "student_course",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
+    @ManyToMany(mappedBy = "students")
     @JsonIgnore
-    private Set<Course> courses = new HashSet<>();
+    private Set<Course> courses;
 
     public Student() {
     }
 
-    public Student(String name, String email, LocalDate dob) {
+    public Student(String name, String email, LocalDate dob, Integer age, Set<Course> courses) {
         this.name = name;
         this.email = email;
         this.dob = dob;
-    }
-
-    public Student(String name, String email, LocalDate dob, Set<Course> courses) {
-        this.name = name;
-        this.email = email;
-        this.dob = dob;
+        this.age = age;
         this.courses = courses;
     }
 
-    public Student(Long id, String name, String email, LocalDate dob, Set<Course> courses) {
+    public Student(Long id, String name, String email, LocalDate dob, Integer age, Set<Course> courses) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.courses = courses;
+        this.age = age;
     }
 
     public Long getId() {
@@ -98,6 +91,10 @@ public class Student {
         return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     public Set<Course> getCourses() {
         return courses;
     }
@@ -113,7 +110,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", dob=" + dob +
-                ", age=" + getAge() +
+                ", age=" + age +
                 ", courses=" + courses +
                 '}';
     }

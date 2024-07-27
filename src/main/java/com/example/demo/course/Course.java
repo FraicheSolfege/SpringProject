@@ -21,9 +21,12 @@ public class Course {
     )
     private Long id;
     private String name;
-
-    @ManyToMany(mappedBy = "courses")
-    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "student_course",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
     private Set<Student> students = new HashSet<>();
 
     public Course() {

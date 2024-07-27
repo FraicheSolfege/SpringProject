@@ -1,6 +1,8 @@
 package com.example.demo.grade;
 
 import com.example.demo.student.Student;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -23,28 +25,23 @@ public class Grade {
     private String name;
     private Integer score;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "student_grade",
-            joinColumns = @JoinColumn(name = "grade_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private Set<Student> students = new HashSet<>();
+    @ManyToOne
+    private Student student;
 
     public Grade() {
     }
 
-    public Grade(String name, Integer score, Set<Student> students) {
+    public Grade(String name, Integer score, Student student) {
         this.name = name;
         this.score = score;
-        this.students = students;
+        this.student = student;
     }
 
-    public Grade(Long id, String name, Integer score, Set<Student> students) {
+    public Grade(Long id, String name, Integer score, Student student) {
         this.id = id;
         this.name = name;
         this.score = score;
-        this.students = students;
+        this.student = student;
     }
 
     public Long getId() {
@@ -71,12 +68,12 @@ public class Grade {
         this.score = score;
     }
 
-    public Set<Student> getStudents() {
-        return students;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudents(Set<Student> students) {
-        this.students = students;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Override
@@ -85,7 +82,7 @@ public class Grade {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", score=" + score +
-                ", students=" + students +
+                ", student=" + student +
                 '}';
     }
 }
